@@ -138,7 +138,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
                         android:text="Event Description..."
-                        android:textColor="#625B6D"
+                        android:textColor="@color/text_secondary"
                         android:textSize="15sp"
                         android:lineSpacingExtra="5dp" />
                 </LinearLayout>
@@ -152,7 +152,7 @@
                 android:backgroundTint="@color/accent"
                 android:text="Register for Event"
                 android:textAllCaps="false"
-                android:textColor="@color/surface_card"
+                android:textColor="@color/on_accent"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>

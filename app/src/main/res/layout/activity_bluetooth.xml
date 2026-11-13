@@ -97,7 +97,7 @@
                         android:backgroundTint="@color/accent"
                         android:text="Turn Bluetooth On"
                         android:textAllCaps="false"
-                        android:textColor="@color/surface_card"
+                        android:textColor="@color/on_accent"
                         android:textStyle="bold" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -156,7 +156,7 @@
                             android:backgroundTint="@color/accent"
                             android:text="Participant Check-in"
                             android:textAllCaps="false"
-                            android:textColor="@color/surface_card" />
+                            android:textColor="@color/on_accent" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -198,7 +198,7 @@
                             android:backgroundTint="@color/accent"
                             android:text="Organizer Receiver"
                             android:textAllCaps="false"
-                            android:textColor="@color/surface_card" />
+                            android:textColor="@color/on_accent" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -239,7 +239,7 @@
                             android:backgroundTint="@color/accent"
                             android:text="View Attendance Records"
                             android:textAllCaps="false"
-                            android:textColor="@color/surface_card" />
+                            android:textColor="@color/on_accent" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
@@ -297,7 +297,7 @@
                     android:backgroundTint="@color/accent"
                     android:text="Find Paired Organizer Phones"
                     android:textAllCaps="false"
-                    android:textColor="@color/surface_card" />
+                    android:textColor="@color/on_accent" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -359,7 +359,7 @@
                     android:backgroundTint="@color/accent"
                     android:text="Start Receiving Check-ins"
                     android:textAllCaps="false"
-                    android:textColor="@color/surface_card" />
+                    android:textColor="@color/on_accent" />
 
                 <Button
                     android:id="@+id/btnStopServer"

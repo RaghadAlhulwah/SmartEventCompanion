@@ -367,7 +367,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="8dp"
-                    android:backgroundTint="#E9E4EF"
+                    android:backgroundTint="@color/accent_soft"
                     android:text="Stop Receiving"
                     android:textAllCaps="false"
                     android:textColor="@color/accent_text" />

@@ -9,10 +9,12 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +25,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,9 +37,11 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView lvEvents;
     private TextView tvError;
+    private TextView tvEventCount;
     private EditText etSearch;
-    private ArrayList<Event> allEvents = new ArrayList<>();
-    private ArrayList<Event> displayedEvents = new ArrayList<>();
+    private Spinner spCategoryFilter;
+    private final ArrayList<Event> allEvents = new ArrayList<>();
+    private final ArrayList<Event> displayedEvents = new ArrayList<>();
     private EventAdapter adapter;
 
     @Override
@@ -47,34 +52,41 @@ public class MainActivity extends AppCompatActivity {
         View root = findViewById(R.id.main);
         ViewCompat.setOnApplyWindowInsetsListener(root, (v, windowInsets) -> {
             Insets bars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(bars.left, bars.top, bars.right, bars.bottom);
+            v.setPadding(bars.left + 18, bars.top + 16, bars.right + 18, bars.bottom + 12);
             return windowInsets;
         });
 
         lvEvents = findViewById(R.id.lvEvents);
         tvError = findViewById(R.id.tvError);
+        tvEventCount = findViewById(R.id.tvEventCount);
         etSearch = findViewById(R.id.etSearch);
+        spCategoryFilter = findViewById(R.id.spCategoryFilter);
+
         Button btnMyEvents = findViewById(R.id.btnMyEvents);
         Button btnBluetooth = findViewById(R.id.btnBluetooth);
         Button btnToggleTheme = findViewById(R.id.btnToggleTheme);
 
         loadAndShowEvents();
+        setupCategoryFilter();
 
-        // تفعيل ميزة البحث (Additional Feature)
         etSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                filterEvents(s.toString());
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filterEvents();
             }
+            @Override public void afterTextChanged(Editable s) { }
+        });
 
+        spCategoryFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                filterEvents();
+            }
+            @Override public void onNothingSelected(AdapterView<?> parent) { }
         });
 
         lvEvents.setOnItemClickListener((parent, view, position, id) -> {
+            if (position < 0 || position >= displayedEvents.size()) return;
             Event event = displayedEvents.get(position);
             Intent intent = createIntent("EventDetailsActivity");
             intent.putExtra(EXTRA_EVENT_ID, event.getId());
@@ -85,14 +97,13 @@ public class MainActivity extends AppCompatActivity {
             openScreen(intent);
         });
 
-        // كود الثيم الخاص بك
         btnToggleTheme.setOnClickListener(v -> {
-            int currentMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-            if (currentMode == Configuration.UI_MODE_NIGHT_YES) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            }
+            int currentMode = getResources().getConfiguration().uiMode
+                    & Configuration.UI_MODE_NIGHT_MASK;
+            AppCompatDelegate.setDefaultNightMode(
+                    currentMode == Configuration.UI_MODE_NIGHT_YES
+                            ? AppCompatDelegate.MODE_NIGHT_NO
+                            : AppCompatDelegate.MODE_NIGHT_YES);
         });
 
         btnMyEvents.setOnClickListener(v -> openScreen(createIntent("MyEventsActivity")));
@@ -101,9 +112,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadAndShowEvents() {
         try {
-            allEvents = EventRepository.loadEvents(this);
-            displayedEvents.clear();
-            displayedEvents.addAll(allEvents);
+            allEvents.clear();
+            allEvents.addAll(EventRepository.loadEvents(this));
         } catch (IllegalStateException e) {
             showError(getString(R.string.msg_unable_to_load_events));
             return;
@@ -114,33 +124,61 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        tvError.setVisibility(View.GONE);
-        lvEvents.setVisibility(View.VISIBLE);
         adapter = new EventAdapter(displayedEvents);
         lvEvents.setAdapter(adapter);
+        filterEvents();
     }
 
-    // دالة الفلترة للبحث
-    private void filterEvents(String query) {
+    private void setupCategoryFilter() {
+        LinkedHashSet<String> categories = new LinkedHashSet<>();
+        categories.add("All types");
+        for (Event event : allEvents) {
+            categories.add(event.getCategory());
+        }
+
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item, new ArrayList<>(categories));
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spCategoryFilter.setAdapter(categoryAdapter);
+    }
+
+    private void filterEvents() {
+        if (adapter == null) return;
+
+        String query = etSearch.getText().toString().trim().toLowerCase();
+        String selectedCategory = spCategoryFilter.getSelectedItem() == null
+                ? "All types" : spCategoryFilter.getSelectedItem().toString();
+
         displayedEvents.clear();
-        if (query.isEmpty()) {
-            displayedEvents.addAll(allEvents);
-        } else {
-            String lowerCaseQuery = query.toLowerCase();
-            for (Event event : allEvents) {
-                if (event.getName().toLowerCase().contains(lowerCaseQuery) ||
-                        event.getLocation().toLowerCase().contains(lowerCaseQuery)) {
-                    displayedEvents.add(event);
-                }
+        for (Event event : allEvents) {
+            boolean matchesCategory = selectedCategory.equals("All types")
+                    || event.getCategory().equalsIgnoreCase(selectedCategory);
+            boolean matchesSearch = query.isEmpty()
+                    || event.getName().toLowerCase().contains(query)
+                    || event.getLocation().toLowerCase().contains(query)
+                    || event.getCategory().toLowerCase().contains(query)
+                    || event.getDescription().toLowerCase().contains(query);
+
+            if (matchesCategory && matchesSearch) {
+                displayedEvents.add(event);
             }
         }
+
         adapter.notifyDataSetChanged();
+        tvEventCount.setText(displayedEvents.size() + " events found");
+        boolean hasResults = !displayedEvents.isEmpty();
+        lvEvents.setVisibility(hasResults ? View.VISIBLE : View.GONE);
+        tvError.setVisibility(hasResults ? View.GONE : View.VISIBLE);
+        if (!hasResults) {
+            tvError.setText("No events match your search. Try another keyword or type.");
+        }
     }
 
     private void showError(String message) {
         lvEvents.setVisibility(View.GONE);
         tvError.setText(message);
         tvError.setVisibility(View.VISIBLE);
+        tvEventCount.setText("Events");
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -167,13 +205,20 @@ public class MainActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             View row = convertView;
             if (row == null) {
-                row = LayoutInflater.from(getContext()).inflate(R.layout.item_event, parent, false);
+                row = LayoutInflater.from(getContext())
+                        .inflate(R.layout.event_card, parent, false);
             }
+
             Event event = getItem(position);
-            TextView tvItemName = row.findViewById(R.id.tvItemName);
-            TextView tvItemDate = row.findViewById(R.id.tvItemDate);
-            tvItemName.setText(event.getName());
-            tvItemDate.setText(event.getDate());
+            TextView tvName = row.findViewById(R.id.tvEventName);
+            TextView tvDate = row.findViewById(R.id.tvEventDate);
+            TextView tvLocation = row.findViewById(R.id.tvEventLocation);
+            TextView tvCategory = row.findViewById(R.id.tvEventCategory);
+
+            tvName.setText(event.getName());
+            tvDate.setText(event.getDate());
+            tvLocation.setText(event.getLocation());
+            tvCategory.setText(event.getCategory());
             return row;
         }
     }

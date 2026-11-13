@@ -18,12 +18,8 @@ public class EventRepository {
 
     private static final String FILE_NAME = "events.json";
 
-    // Returns the list of events stored in events.json.
-    // Throws IllegalStateException if the file cannot be read or the JSON is invalid,
-    // so MainActivity can show "Unable to load events" instead of a fake success.
     public static ArrayList<Event> loadEvents(Context context) {
-        String json = readFile(context);
-        return parseEvents(json);
+        return parseEvents(readFile(context));
     }
 
     private static String readFile(Context context) {
@@ -31,7 +27,6 @@ public class EventRepository {
         try (InputStream inputStream = context.getAssets().open(FILE_NAME);
              BufferedReader reader = new BufferedReader(
                      new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-
             String line;
             while ((line = reader.readLine()) != null) {
                 builder.append(line).append('\n');
@@ -46,23 +41,20 @@ public class EventRepository {
         ArrayList<Event> events = new ArrayList<>();
         try {
             JSONArray array = new JSONArray(json);
-
             for (int i = 0; i < array.length(); i++) {
                 JSONObject obj = array.getJSONObject(i);
-
                 int id = obj.getInt("id");
                 String name = obj.getString("name");
                 String date = obj.getString("date");
                 String location = obj.getString("location");
-                String description = obj.getString("description");
+                String description = obj.optString("description", "");
+                String category = obj.optString("category", "Other");
 
-                // The shared rules: id must be a positive number and the main data must exist.
                 if (id <= 0 || name.trim().isEmpty() || date.trim().isEmpty()
                         || location.trim().isEmpty()) {
                     throw new IllegalStateException("Invalid event data at position " + i);
                 }
-
-                events.add(new Event(id, name, date, location, description));
+                events.add(new Event(id, name, date, location, description, category));
             }
         } catch (JSONException e) {
             throw new IllegalStateException("Invalid JSON in " + FILE_NAME, e);

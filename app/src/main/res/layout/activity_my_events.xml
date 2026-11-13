@@ -4,7 +4,7 @@
     android:id="@+id/myEventsRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_main">
+    android:background="#F7F5FC">
 
     <LinearLayout
         android:id="@+id/footerLayout"
@@ -12,199 +12,171 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
-        android:background="@color/bg_main"
-        android:padding="12dp">
+        android:padding="12dp"
+        android:background="#F7F5FC">
 
         <Button
             android:id="@+id/btnHome"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="1"
             android:layout_marginEnd="6dp"
-            android:minHeight="48dp"
-            android:backgroundTint="#475569"
+            android:backgroundTint="#E7E0F2"
             android:text="Home"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF" />
+            android:textColor="#5F4A7E"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnMyEvents"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="1"
             android:layout_marginStart="6dp"
-            android:minHeight="48dp"
-            android:backgroundTint="#2563EB"
+            android:backgroundTint="#7656A8"
             android:text="My Events"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF" />
-
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
     </LinearLayout>
 
-    <View
-        android:id="@+id/footerDivider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_above="@id/footerLayout"
-        android:background="#3394A3B8" />
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/footerDivider"
-        android:orientation="vertical">
+        android:layout_above="@id/footerLayout"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="18dp">
 
             <Button
                 android:id="@+id/btnBack"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:minHeight="48dp"
-                android:backgroundTint="#475569"
-                android:text="‹ Back"
+                android:layout_height="40dp"
+                android:layout_marginBottom="12dp"
+                android:backgroundTint="#E7E0F2"
+                android:text="‹  Back"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF" />
+                android:textColor="#5F4A7E" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="My Events"
-                android:textColor="@color/text_primary"
-                android:textSize="28sp"
+                android:textColor="#29243A"
+                android:textSize="27sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="Your registered campus events, all in one place."
-                android:textColor="@color/text_secondary"
-                android:textSize="15sp" />
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="14dp"
+                android:text="Your registered events, all in one place."
+                android:textColor="#777184"
+                android:textSize="14sp" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="12dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnSaveSummary"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginEnd="6dp"
-                android:minHeight="48dp"
-                android:backgroundTint="#2563EB"
-                android:text="Save Summary"
-                android:textAllCaps="false"
-                android:textColor="#FFFFFF" />
-
-            <Button
-                android:id="@+id/btnViewSummary"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="6dp"
-                android:minHeight="48dp"
-                android:backgroundTint="#475569"
-                android:text="View Summary"
-                android:textAllCaps="false"
-                android:textColor="#FFFFFF" />
-
-        </LinearLayout>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="24dp"
-            app:cardBackgroundColor="@color/glass_card"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="0dp"
-            app:strokeWidth="1dp"
-            app:strokeColor="#33FFFFFF">
-
-            <FrameLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
 
-                <ScrollView
-                    android:id="@+id/emptyState"
+                <Button
+                    android:id="@+id/btnSaveSummary"
+                    android:layout_width="0dp"
+                    android:layout_height="46dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="5dp"
+                    android:backgroundTint="#7656A8"
+                    android:text="Save Summary"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF" />
+
+                <Button
+                    android:id="@+id/btnViewSummary"
+                    android:layout_width="0dp"
+                    android:layout_height="46dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="5dp"
+                    android:backgroundTint="#E7E0F2"
+                    android:text="View Summary"
+                    android:textAllCaps="false"
+                    android:textColor="#5F4A7E" />
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="2dp">
+
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fillViewport="true">
+                    android:layout_height="match_parent">
 
-                    <LinearLayout
+                    <ScrollView
+                        android:id="@+id/emptyState"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:padding="24dp">
+                        android:layout_height="match_parent"
+                        android:fillViewport="true">
 
-                        <TextView
-                            android:id="@+id/tvEmptyMessage"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:orientation="vertical"
                             android:gravity="center"
-                            android:text="Loading your events..."
-                            android:textColor="@color/text_secondary"
-                            android:textSize="16sp"
-                            android:lineSpacingExtra="6dp" />
+                            android:padding="24dp">
 
-                        <Button
-                            android:id="@+id/btnBrowseEvents"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:minHeight="50dp"
-                            android:backgroundTint="#2563EB"
-                            android:text="Browse Events"
-                            android:textAllCaps="false"
-                            android:textColor="#FFFFFF"
-                            android:visibility="gone" />
+                            <TextView
+                                android:id="@+id/tvEmptyMessage"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Loading your events..."
+                                android:textColor="#777184"
+                                android:textSize="15sp"
+                                android:lineSpacingExtra="5dp" />
 
-                        <Button
-                            android:id="@+id/btnRetry"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:minHeight="50dp"
-                            android:backgroundTint="#475569"
-                            android:text="Retry"
-                            android:textAllCaps="false"
-                            android:textColor="#FFFFFF"
-                            android:visibility="gone" />
+                            <Button
+                                android:id="@+id/btnBrowseEvents"
+                                android:layout_width="match_parent"
+                                android:layout_height="48dp"
+                                android:layout_marginTop="18dp"
+                                android:backgroundTint="#7656A8"
+                                android:text="Browse Events"
+                                android:textAllCaps="false"
+                                android:textColor="#FFFFFF"
+                                android:visibility="gone" />
 
-                    </LinearLayout>
+                            <Button
+                                android:id="@+id/btnRetry"
+                                android:layout_width="match_parent"
+                                android:layout_height="48dp"
+                                android:layout_marginTop="10dp"
+                                android:backgroundTint="#E7E0F2"
+                                android:text="Retry"
+                                android:textAllCaps="false"
+                                android:textColor="#5F4A7E"
+                                android:visibility="gone" />
+                        </LinearLayout>
+                    </ScrollView>
 
-                </ScrollView>
-
-                <ListView
-                    android:id="@+id/lvMyEvents"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="12dp"
-                    android:clipToPadding="false"
-                    android:divider="#3394A3B8"
-                    android:dividerHeight="1dp"
-                    android:visibility="gone" />
-
-            </FrameLayout>
-
-        </androidx.cardview.widget.CardView>
-
-    </LinearLayout>
-
+                    <ListView
+                        android:id="@+id/lvMyEvents"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:divider="#EEEAF3"
+                        android:dividerHeight="8dp"
+                        android:visibility="gone" />
+                </FrameLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

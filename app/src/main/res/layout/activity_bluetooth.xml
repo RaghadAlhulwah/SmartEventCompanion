@@ -4,7 +4,7 @@
     android:id="@+id/bluetoothRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground">
+    android:background="#F7F5FC">
 
     <LinearLayout
         android:id="@+id/footerLayout"
@@ -12,39 +12,33 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
-        android:background="?android:attr/colorBackground"
-        android:padding="12dp">
+        android:padding="12dp"
+        android:background="#F7F5FC">
 
         <Button
             android:id="@+id/btnHome"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="1"
             android:layout_marginEnd="6dp"
-            android:minHeight="48dp"
-            android:backgroundTint="#475569"
+            android:backgroundTint="#E7E0F2"
             android:text="Home"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF" />
+            android:textColor="#5F4A7E"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnMyEvents"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="1"
             android:layout_marginStart="6dp"
-            android:minHeight="48dp"
-            android:backgroundTint="#475569"
+            android:backgroundTint="#E7E0F2"
             android:text="My Events"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF" />
+            android:textColor="#5F4A7E"
+            android:textStyle="bold" />
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_above="@id/footerLayout"
-        android:background="?android:attr/listDivider" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -56,89 +50,132 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="18dp">
 
             <Button
                 android:id="@+id/btnBack"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginBottom="12dp"
-                android:backgroundTint="#475569"
-                android:text="‹ Back"
+                android:backgroundTint="#E7E0F2"
+                android:text="‹  Back"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF" />
+                android:textColor="#5F4A7E" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Bluetooth Check-in"
-                android:textColor="?android:attr/textColorPrimary"
-                android:textSize="28sp"
+                android:textColor="#29243A"
+                android:textSize="27sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="Choose how you want to use Smart Event Companion."
-                android:textColor="?android:attr/textColorSecondary"
+                android:layout_marginTop="5dp"
+                android:text="A simple way to record event attendance."
+                android:textColor="#777184"
                 android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/tvBtStatus"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:padding="12dp"
-                android:background="#EEF2FF"
-                android:text="Bluetooth status: Checking..."
-                android:textColor="#334155"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="DEVICE STATUS"
+                        android:textColor="#8065A8"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.08" />
+
+                    <TextView
+                        android:id="@+id/tvBtStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="Checking Bluetooth status..."
+                        android:textColor="#403750"
+                        android:textSize="14sp" />
+
+                    <Button
+                        android:id="@+id/btnEnableBt"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="12dp"
+                        android:backgroundTint="#7656A8"
+                        android:text="Turn Bluetooth On"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
             <LinearLayout
                 android:id="@+id/hubPanel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="18dp">
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="What would you like to do?"
+                    android:textColor="#29243A"
+                    android:textSize="19sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="10dp" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginBottom="10dp"
+                    app:cardBackgroundColor="#FFFFFF"
                     app:cardCornerRadius="18dp"
-                    app:cardElevation="3dp">
+                    app:cardElevation="2dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="18dp">
+                        android:padding="16dp">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Participant"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            android:textColor="#6D5AA8" />
+                            android:text="I'm a Participant"
+                            android:textColor="#5F4A7E"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="Connect to the organizer and send your event check-in."
-                            android:textColor="?android:attr/textColorSecondary"
-                            android:textSize="14sp" />
+                            android:layout_marginTop="4dp"
+                            android:text="I want to check in to an event using the organizer's phone."
+                            android:textColor="#777184"
+                            android:textSize="13sp" />
 
                         <Button
                             android:id="@+id/btnParticipantMode"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:backgroundTint="#7C3AED"
-                            android:text="Continue as Participant"
+                            android:layout_height="46dp"
+                            android:layout_marginTop="11dp"
+                            android:backgroundTint="#7656A8"
+                            android:text="Participant Check-in"
                             android:textAllCaps="false"
                             android:textColor="#FFFFFF" />
                     </LinearLayout>
@@ -147,81 +184,85 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginBottom="10dp"
+                    app:cardBackgroundColor="#FFFFFF"
                     app:cardCornerRadius="18dp"
-                    app:cardElevation="3dp">
+                    app:cardElevation="2dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="18dp">
+                        android:padding="16dp">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Organizer"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            android:textColor="#256B86" />
+                            android:text="I'm the Organizer"
+                            android:textColor="#536B9C"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="Receive participant check-ins and save attendance on this phone."
-                            android:textColor="?android:attr/textColorSecondary"
-                            android:textSize="14sp" />
+                            android:layout_marginTop="4dp"
+                            android:text="I want this phone to receive check-ins and save attendance."
+                            android:textColor="#777184"
+                            android:textSize="13sp" />
 
                         <Button
                             android:id="@+id/btnOrganizerMode"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:backgroundTint="#256B86"
-                            android:text="Continue as Organizer"
+                            android:layout_height="46dp"
+                            android:layout_marginTop="11dp"
+                            android:backgroundTint="#657DB4"
+                            android:text="Organizer Receiver"
                             android:textAllCaps="false"
                             android:textColor="#FFFFFF" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <Button
-                    android:id="@+id/btnAttendanceDashboard"
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#475569"
-                    android:text="Attendance Dashboard"
-                    android:textAllCaps="false"
-                    android:textColor="#FFFFFF" />
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="2dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp">
-
-                    <Button
-                        android:id="@+id/btnEnableBt"
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginEnd="5dp"
-                        android:backgroundTint="#64748B"
-                        android:text="Turn Bluetooth On"
-                        android:textAllCaps="false"
-                        android:textColor="#FFFFFF" />
+                        android:orientation="vertical"
+                        android:padding="16dp">
 
-                    <Button
-                        android:id="@+id/btnVisible"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginStart="5dp"
-                        android:backgroundTint="#64748B"
-                        android:text="Make Discoverable"
-                        android:textAllCaps="false"
-                        android:textColor="#FFFFFF" />
-                </LinearLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Attendance Records"
+                            android:textColor="#536B79"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="View the attendance records saved on this phone."
+                            android:textColor="#777184"
+                            android:textSize="13sp" />
+
+                        <Button
+                            android:id="@+id/btnAttendanceDashboard"
+                            android:layout_width="match_parent"
+                            android:layout_height="46dp"
+                            android:layout_marginTop="11dp"
+                            android:backgroundTint="#6F8793"
+                            android:text="View Attendance Records"
+                            android:textAllCaps="false"
+                            android:textColor="#FFFFFF" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
             <LinearLayout
@@ -236,57 +277,63 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Participant Check-in"
-                    android:textSize="22sp"
+                    android:textSize="21sp"
                     android:textStyle="bold"
-                    android:textColor="?android:attr/textColorPrimary" />
+                    android:textColor="#29243A" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="Enter your name, choose an event, then select the paired organizer phone."
-                    android:textColor="?android:attr/textColorSecondary"
-                    android:textSize="14sp" />
+                    android:layout_marginTop="5dp"
+                    android:text="Enter your name and select an event you have registered for."
+                    android:textColor="#777184"
+                    android:textSize="13sp" />
 
                 <EditText
                     android:id="@+id/etParticipantName"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:hint="Participant name"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/bg_search_field"
+                    android:hint="Your name"
                     android:inputType="textPersonName"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
                     android:singleLine="true" />
 
                 <Spinner
                     android:id="@+id/spRegisteredEvents"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp" />
+                    android:layout_height="50dp"
+                    android:layout_marginTop="9dp"
+                    android:background="@drawable/bg_search_field"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp" />
 
                 <Button
                     android:id="@+id/btnPairedDevices"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:backgroundTint="#7C3AED"
-                    android:text="Load Paired Organizer Devices"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="13dp"
+                    android:backgroundTint="#7656A8"
+                    android:text="Find Paired Organizer Phones"
                     android:textAllCaps="false"
                     android:textColor="#FFFFFF" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:text="Tap the organizer phone to send the check-in."
-                    android:textColor="?android:attr/textColorSecondary"
+                    android:layout_marginTop="13dp"
+                    android:text="Tap the organizer phone below to send your check-in."
+                    android:textColor="#777184"
                     android:textSize="13sp" />
 
                 <ListView
                     android:id="@+id/lvDevices"
                     android:layout_width="match_parent"
                     android:layout_height="220dp"
-                    android:layout_marginTop="6dp"
-                    android:divider="?android:attr/listDivider"
+                    android:layout_marginTop="5dp"
+                    android:divider="#E9E3F0"
                     android:dividerHeight="1dp" />
             </LinearLayout>
 
@@ -302,24 +349,35 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Organizer Mode"
-                    android:textSize="22sp"
+                    android:textSize="21sp"
                     android:textStyle="bold"
-                    android:textColor="?android:attr/textColorPrimary" />
+                    android:textColor="#29243A" />
 
                 <TextView
+                    android:id="@+id/tvOrganizerHint"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="Start the receiver and keep this screen open while participants check in."
-                    android:textColor="?android:attr/textColorSecondary"
-                    android:textSize="14sp" />
+                    android:layout_marginTop="5dp"
+                    android:text="Keep this screen open while participants send their check-ins."
+                    android:textColor="#777184"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/btnVisible"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="14dp"
+                    android:backgroundTint="#E7E0F2"
+                    android:text="Make This Phone Discoverable"
+                    android:textAllCaps="false"
+                    android:textColor="#5F4A7E" />
 
                 <Button
                     android:id="@+id/btnStartServer"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:backgroundTint="#256B86"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="9dp"
+                    android:backgroundTint="#657DB4"
                     android:text="Start Receiving Check-ins"
                     android:textAllCaps="false"
                     android:textColor="#FFFFFF" />
@@ -327,12 +385,12 @@
                 <Button
                     android:id="@+id/btnStopServer"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="48dp"
                     android:layout_marginTop="8dp"
-                    android:backgroundTint="#64748B"
-                    android:text="Stop Organizer Mode"
+                    android:backgroundTint="#E9E4EF"
+                    android:text="Stop Receiving"
                     android:textAllCaps="false"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#5F4A7E" />
             </LinearLayout>
 
             <LinearLayout
@@ -346,35 +404,35 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Attendance Dashboard"
-                    android:textSize="22sp"
+                    android:text="Attendance Records"
+                    android:textSize="21sp"
                     android:textStyle="bold"
-                    android:textColor="?android:attr/textColorPrimary" />
+                    android:textColor="#29243A" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="Attendance records saved locally on this organizer device."
-                    android:textColor="?android:attr/textColorSecondary"
-                    android:textSize="14sp" />
+                    android:layout_marginTop="5dp"
+                    android:text="Records saved locally on this organizer phone."
+                    android:textColor="#777184"
+                    android:textSize="13sp" />
 
                 <Button
                     android:id="@+id/btnRefreshAttendance"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:backgroundTint="#475569"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="12dp"
+                    android:backgroundTint="#E7E0F2"
                     android:text="Refresh Records"
                     android:textAllCaps="false"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#5F4A7E" />
 
                 <ListView
                     android:id="@+id/lvAttendance"
                     android:layout_width="match_parent"
                     android:layout_height="320dp"
                     android:layout_marginTop="8dp"
-                    android:divider="?android:attr/listDivider"
+                    android:divider="#E9E3F0"
                     android:dividerHeight="1dp" />
             </LinearLayout>
         </LinearLayout>

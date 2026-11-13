@@ -22,7 +22,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/footerLayout"
+        android:layout_above="@id/bottomNavigation"
         android:fillViewport="true">
 
         <LinearLayout

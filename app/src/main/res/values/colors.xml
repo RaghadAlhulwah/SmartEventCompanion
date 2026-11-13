@@ -1,9 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="bg_main">#F3F6FC</color>
-    <color name="glass_card">#CCFFFFFF</color>
-    <color name="text_primary">#111827</color>
-    <color name="text_secondary">#64748B</color>
+    <color name="app_background">#F7F5FC</color>
+    <color name="surface_card">#FFFFFF</color>
+    <color name="text_primary">#29243A</color>
+    <color name="text_secondary">#777184</color>
+    <color name="accent">#7656A8</color>
+    <color name="accent_soft">#E7E0F2</color>
+    <color name="accent_text">#5F4A7E</color>
+    <color name="accent_label">#8065A8</color>
+    <color name="input_hint">#938CA0</color>
+    <color name="divider_soft">#EEEAF3</color>
+    <color name="on_accent">#FFFFFF</color>
+    <color name="nav_unselected">#8D849A</color>
 </resources>

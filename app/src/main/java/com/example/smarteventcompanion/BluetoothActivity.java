@@ -116,6 +116,7 @@ public class BluetoothActivity extends AppCompatActivity {
         findViewById(R.id.btnPairedDevices).setOnClickListener(v -> runBluetoothAction(ACTION_LOAD_DEVICES));
         findViewById(R.id.btnStartServer).setOnClickListener(v -> runBluetoothAction(ACTION_START_SERVER));
         findViewById(R.id.btnStopServer).setOnClickListener(v -> stopServer());
+        findViewById(R.id.btnRefreshAttendance).setOnClickListener(v -> loadAttendanceRecords());
 
         lvDevices.setOnItemClickListener((parent, view, position, id) -> {
             if (position < bluetoothDevices.size()) {
@@ -368,25 +369,33 @@ public class BluetoothActivity extends AppCompatActivity {
             JSONObject payload = new JSONObject(message);
             String participantName = payload.optString("participantName", "").trim();
             int eventId = payload.optInt("eventId", -1);
+            String response;
 
             if (participantName.isEmpty() || eventId <= 0) {
+                response = "ERROR";
                 showReceiveResult("Invalid attendance data received.", false);
-                return;
-            }
-
-            String attendanceTime = new SimpleDateFormat(
-                    "yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
-            boolean saved = databaseHelper.recordAttendance(
-                    participantName, eventId, attendanceTime);
-
-            if (saved) {
-                showReceiveResult("Attendance saved for " + participantName
-                        + " (Event " + eventId + ").", true);
-            } else if (databaseHelper.isAttendanceRecorded(participantName, eventId)) {
-                showReceiveResult(participantName + " is already checked in for this event.", false);
             } else {
-                showReceiveResult("Attendance could not be saved. Please try again.", false);
+                String attendanceTime = new SimpleDateFormat(
+                        "yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
+                boolean saved = databaseHelper.recordAttendance(
+                        participantName, eventId, attendanceTime);
+
+                if (saved) {
+                    response = "SAVED";
+                    showReceiveResult("Attendance saved for " + participantName
+                            + " (Event " + eventId + ").", true);
+                } else if (databaseHelper.isAttendanceRecorded(participantName, eventId)) {
+                    response = "DUPLICATE";
+                    showReceiveResult(participantName + " is already checked in for this event.", false);
+                } else {
+                    response = "ERROR";
+                    showReceiveResult("Attendance could not be saved. Please try again.", false);
+                }
             }
+
+            OutputStream responseStream = socket.getOutputStream();
+            responseStream.write((response + "\n").getBytes(StandardCharsets.UTF_8));
+            responseStream.flush();
         } catch (IOException | JSONException | IllegalStateException e) {
             showReceiveResult("Could not read or save the attendance message.", false);
         } finally {
@@ -440,10 +449,23 @@ public class BluetoothActivity extends AppCompatActivity {
                 output.write((payload.toString() + "\n").getBytes(StandardCharsets.UTF_8));
                 output.flush();
 
-                runOnUiThread(() -> {
-                    showStatus("Check-in message sent. Ask the organizer to confirm receipt.");
-                    Toast.makeText(this, "Check-in sent to organizer.", Toast.LENGTH_LONG).show();
-                });
+                BufferedReader responseReader = new BufferedReader(new InputStreamReader(
+                        socket.getInputStream(), StandardCharsets.UTF_8));
+                String response = responseReader.readLine();
+                if ("SAVED".equals(response)) {
+                    runOnUiThread(() -> {
+                        showStatus("Organizer confirmed that your attendance was saved.");
+                        Toast.makeText(this, "Attendance confirmed!", Toast.LENGTH_LONG).show();
+                    });
+                } else if ("DUPLICATE".equals(response)) {
+                    runOnUiThread(() -> Toast.makeText(
+                            this, "You are already checked in for this event.",
+                            Toast.LENGTH_LONG).show());
+                } else {
+                    runOnUiThread(() -> Toast.makeText(
+                            this, "The organizer could not save your attendance.",
+                            Toast.LENGTH_LONG).show());
+                }
             } catch (IOException | JSONException | SecurityException e) {
                 runOnUiThread(() -> Toast.makeText(
                         this,
@@ -501,7 +523,7 @@ public class BluetoothActivity extends AppCompatActivity {
             }
         } else if (requestCode == REQUEST_ADVERTISE_PERMISSION) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                runBluetoothAction(ACTION_DISCOVERABLE);
+                requestDiscoverableNow();
             } else {
                 Toast.makeText(this, "Bluetooth advertising permission was denied.",
                         Toast.LENGTH_LONG).show();

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="bg_main">#F3F6FC</color>
+    <color name="glass_card">#CCFFFFFF</color>
+    <color name="text_primary">#111827</color>
+    <color name="text_secondary">#64748B</color>
+</resources>

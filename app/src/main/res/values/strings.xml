@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Smart Event Companion</string>
+
+    <!-- Home screen (part 1) -->
+    <string name="title_events">Events</string>
+    <string name="btn_my_events">My Events</string>
+    <string name="btn_bluetooth">Bluetooth</string>
+    <string name="msg_unable_to_load_events">Unable to load events</string>
+    <string name="msg_no_events">No events available</string>
+    <string name="msg_screen_not_available">This screen is not available yet</string>
+</resources>

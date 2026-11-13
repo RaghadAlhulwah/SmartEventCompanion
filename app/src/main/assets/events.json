@@ -1,0 +1,31 @@
+[
+  {
+    "id": 1,
+    "name": "Android Workshop",
+    "date": "2026-10-28",
+    "location": "Computer Lab 1",
+    "description": "Learn the basics of Android app development."
+  },
+  {
+    "id": 2,
+    "name": "Cybersecurity Workshop",
+    "date": "2026-10-29",
+    "location": "Computer Lab 2",
+    "description": "Learn basic ways to protect accounts and data."
+  },
+  {
+    "id": 3,
+    "name": "Graduation Projects Exhibition",
+    "date": "2026-10-30",
+    "location": "College Main Hall",
+    "description": "Explore graduation projects created by students."
+  },
+  {
+    "id": 4,
+    "name": "xxxxxx",
+    "date": "2026-10-30",
+    "location": "College Main Hall",
+    "description": "Explore graduation projects created by students."
+  }
+]
+

@@ -11,4 +11,6 @@
     <color name="divider_soft">#EEEAF3</color>
     <color name="on_accent">#FFFFFF</color>
     <color name="nav_unselected">#8D849A</color>
+    <color name="danger_soft">#F7E8EC</color>
+    <color name="danger">#A33E59</color>
 </resources>

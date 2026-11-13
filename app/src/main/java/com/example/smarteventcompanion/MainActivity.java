@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -62,9 +63,8 @@ public class MainActivity extends AppCompatActivity {
         etSearch = findViewById(R.id.etSearch);
         spCategoryFilter = findViewById(R.id.spCategoryFilter);
 
-        Button btnMyEvents = findViewById(R.id.btnMyEvents);
-        Button btnBluetooth = findViewById(R.id.btnBluetooth);
         Button btnToggleTheme = findViewById(R.id.btnToggleTheme);
+        setupBottomNavigation();
 
         loadAndShowEvents();
         setupCategoryFilter();
@@ -106,8 +106,29 @@ public class MainActivity extends AppCompatActivity {
                             : AppCompatDelegate.MODE_NIGHT_YES);
         });
 
-        btnMyEvents.setOnClickListener(v -> openScreen(createIntent("MyEventsActivity")));
-        btnBluetooth.setOnClickListener(v -> openScreen(createIntent("BluetoothActivity")));
+    }
+
+
+    private void setupBottomNavigation() {
+        BottomNavigationView navigation = findViewById(R.id.bottomNavigation);
+        navigation.setSelectedItemId(R.id.nav_home);
+        navigation.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_home) return true;
+            if (id == R.id.nav_registrations) {
+                openScreen(createIntent("MyEventsActivity"));
+                return true;
+            }
+            if (id == R.id.nav_bluetooth) {
+                openScreen(createIntent("BluetoothActivity"));
+                return true;
+            }
+            if (id == R.id.nav_reports) {
+                openScreen(createIntent("ReportsActivity"));
+                return true;
+            }
+            return false;
+        });
     }
 
     private void loadAndShowEvents() {

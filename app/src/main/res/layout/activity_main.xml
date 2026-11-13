@@ -3,95 +3,162 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:background="#F7F5FC"
+    android:paddingStart="18dp"
+    android:paddingEnd="18dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="12dp">
 
-    <!-- صف العنوان وزر الثيم بجانب بعض -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp">
+        android:layout_marginBottom="14dp">
 
-        <TextView
-            android:id="@+id/tvTitle"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="@string/title_events"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textSize="28sp"
-            android:textStyle="bold" />
+            android:orientation="vertical"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SMART EVENT COMPANION"
+                android:textColor="#8065A8"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.08" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Discover Events"
+                android:textColor="#29243A"
+                android:textSize="27sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/btnToggleTheme"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="42dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:backgroundTint="#4B5563"
+            android:backgroundTint="#E8E0F4"
             android:text="Theme"
-            android:textColor="#FFFFFF"
+            android:textAllCaps="false"
+            android:textColor="#5D477F"
             android:textSize="12sp" />
     </RelativeLayout>
 
-    <!-- شريط البحث (ميزة زميلتك) -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Find something interesting happening around you."
+        android:textColor="#777184"
+        android:textSize="14sp"
+        android:layout_marginBottom="12dp" />
+
     <EditText
         android:id="@+id/etSearch"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="4dp"
-        android:background="?android:attr/colorButtonNormal"
-        android:hint="Search events..."
-        android:padding="12dp"
-        android:textColor="?android:attr/textColorPrimary"
-        android:textColorHint="?android:attr/textColorSecondary"
-        android:textSize="16sp" />
+        android:layout_height="52dp"
+        android:background="@drawable/bg_search_field"
+        android:hint="Search events, places, topics..."
+        android:inputType="text"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textColor="#29243A"
+        android:textColorHint="#938CA0"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="6dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Browse by type"
+            android:textColor="#403750"
+            android:textStyle="bold"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvEventCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Events"
+            android:textColor="#8065A8"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <Spinner
+        android:id="@+id/spCategoryFilter"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_search_field"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp" />
 
     <ListView
         android:id="@+id/lvEvents"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="12dp"
         android:layout_weight="1"
-        android:divider="?android:attr/dividerVertical"
-        android:dividerHeight="1dp" />
+        android:layout_marginTop="10dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="8dp"
+        android:clipToPadding="false"
+        android:paddingBottom="8dp" />
 
     <TextView
         android:id="@+id/tvError"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="12dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:textColor="?android:attr/textColorPrimary"
-        android:textSize="18sp"
+        android:padding="24dp"
+        android:textColor="#716A7C"
+        android:textSize="15sp"
         android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
 
         <Button
             android:id="@+id/btnMyEvents"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="6dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
-            android:backgroundTint="#2563EB"
-            android:text="@string/btn_my_events"
-            android:textColor="#FFFFFF" />
+            android:layout_marginEnd="6dp"
+            android:backgroundTint="#E7E0F2"
+            android:text="My Events"
+            android:textAllCaps="false"
+            android:textColor="#5F4A7E"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnBluetooth"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
-            android:backgroundTint="#2563EB"
-            android:text="@string/btn_bluetooth"
-            android:textColor="#FFFFFF" />
+            android:layout_marginStart="6dp"
+            android:backgroundTint="#7656A8"
+            android:text="Bluetooth Check-in"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>

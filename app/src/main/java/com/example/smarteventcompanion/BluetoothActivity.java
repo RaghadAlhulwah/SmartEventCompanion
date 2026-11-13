@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.core.app.ActivityCompat;
 
 import org.json.JSONException;
@@ -114,8 +115,7 @@ public class BluetoothActivity extends AppCompatActivity {
                 showHub();
             }
         });
-        findViewById(R.id.btnHome).setOnClickListener(v -> openScreen(MainActivity.class));
-        findViewById(R.id.btnMyEvents).setOnClickListener(v -> openScreen(MyEventsActivity.class));
+        setupBottomNavigation();
 
         btnEnableBt.setOnClickListener(v -> runBluetoothAction(ACTION_TOGGLE_BLUETOOTH));
         findViewById(R.id.btnVisible).setOnClickListener(v -> makeDeviceDiscoverable());
@@ -135,6 +135,29 @@ public class BluetoothActivity extends AppCompatActivity {
         loadRegisteredEvents();
         showHub();
         refreshBluetoothStatus();
+    }
+
+
+    private void setupBottomNavigation() {
+        BottomNavigationView navigation = findViewById(R.id.bottomNavigation);
+        navigation.setSelectedItemId(R.id.nav_bluetooth);
+        navigation.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_bluetooth) return true;
+            if (id == R.id.nav_home) {
+                openScreen(MainActivity.class);
+                return true;
+            }
+            if (id == R.id.nav_registrations) {
+                openScreen(MyEventsActivity.class);
+                return true;
+            }
+            if (id == R.id.nav_reports) {
+                openScreen(ReportsActivity.class);
+                return true;
+            }
+            return false;
+        });
     }
 
     private void showHub() {

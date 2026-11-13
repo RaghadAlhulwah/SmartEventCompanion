@@ -4,41 +4,20 @@
     android:id="@+id/bluetoothRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F7F5FC">
+    android:background="@color/app_background">
 
-    <LinearLayout
-        android:id="@+id/footerLayout"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:padding="12dp"
-        android:background="#F7F5FC">
-
-        <Button
-            android:id="@+id/btnHome"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="6dp"
-            android:backgroundTint="#E7E0F2"
-            android:text="Home"
-            android:textAllCaps="false"
-            android:textColor="#5F4A7E"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/btnMyEvents"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:layout_marginStart="6dp"
-            android:backgroundTint="#E7E0F2"
-            android:text="My Events"
-            android:textAllCaps="false"
-            android:textColor="#5F4A7E"
-            android:textStyle="bold" />
-    </LinearLayout>
+        android:background="@color/surface_card"
+        app:menu="@menu/bottom_navigation_menu"
+        app:itemIconTint="@color/bottom_navigation_tint"
+        app:itemTextColor="@color/bottom_navigation_tint"
+        app:itemIconSize="22dp"
+        app:labelVisibilityMode="labeled"
+        app:itemHorizontalTranslationEnabled="false"
+        app:elevation="8dp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -57,16 +36,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginBottom="12dp"
-                android:backgroundTint="#E7E0F2"
+                android:backgroundTint="@color/accent_soft"
                 android:text="‹  Back"
                 android:textAllCaps="false"
-                android:textColor="#5F4A7E" />
+                android:textColor="@color/accent_text" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Bluetooth Check-in"
-                android:textColor="#29243A"
+                android:textColor="@color/text_primary"
                 android:textSize="27sp"
                 android:textStyle="bold" />
 
@@ -75,14 +54,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="A simple way to record event attendance."
-                android:textColor="#777184"
+                android:textColor="@color/text_secondary"
                 android:textSize="14sp" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="#FFFFFF"
+                app:cardBackgroundColor="@color/surface_card"
                 app:cardCornerRadius="18dp"
                 app:cardElevation="2dp">
 
@@ -96,7 +75,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="DEVICE STATUS"
-                        android:textColor="#8065A8"
+                        android:textColor="@color/accent_label"
                         android:textSize="11sp"
                         android:textStyle="bold"
                         android:letterSpacing="0.08" />
@@ -107,7 +86,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:text="Checking Bluetooth status..."
-                        android:textColor="#403750"
+                        android:textColor="@color/text_primary"
                         android:textSize="14sp" />
 
                     <Button
@@ -115,10 +94,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:layout_marginTop="12dp"
-                        android:backgroundTint="#7656A8"
+                        android:backgroundTint="@color/accent"
                         android:text="Turn Bluetooth On"
                         android:textAllCaps="false"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/surface_card"
                         android:textStyle="bold" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -134,7 +113,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="What would you like to do?"
-                    android:textColor="#29243A"
+                    android:textColor="@color/text_primary"
                     android:textSize="19sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="10dp" />
@@ -143,7 +122,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardBackgroundColor="@color/surface_card"
                     app:cardCornerRadius="18dp"
                     app:cardElevation="2dp">
 
@@ -157,7 +136,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="I'm a Participant"
-                            android:textColor="#5F4A7E"
+                            android:textColor="@color/accent_text"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -166,7 +145,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:text="I want to check in to an event using the organizer's phone."
-                            android:textColor="#777184"
+                            android:textColor="@color/text_secondary"
                             android:textSize="13sp" />
 
                         <Button
@@ -174,10 +153,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="46dp"
                             android:layout_marginTop="11dp"
-                            android:backgroundTint="#7656A8"
+                            android:backgroundTint="@color/accent"
                             android:text="Participant Check-in"
                             android:textAllCaps="false"
-                            android:textColor="#FFFFFF" />
+                            android:textColor="@color/surface_card" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -185,7 +164,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardBackgroundColor="@color/surface_card"
                     app:cardCornerRadius="18dp"
                     app:cardElevation="2dp">
 
@@ -199,7 +178,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="I'm the Organizer"
-                            android:textColor="#536B9C"
+                            android:textColor="@color/accent_label"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -208,7 +187,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:text="I want this phone to receive check-ins and save attendance."
-                            android:textColor="#777184"
+                            android:textColor="@color/text_secondary"
                             android:textSize="13sp" />
 
                         <Button
@@ -216,17 +195,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="46dp"
                             android:layout_marginTop="11dp"
-                            android:backgroundTint="#657DB4"
+                            android:backgroundTint="@color/accent"
                             android:text="Organizer Receiver"
                             android:textAllCaps="false"
-                            android:textColor="#FFFFFF" />
+                            android:textColor="@color/surface_card" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardBackgroundColor="@color/surface_card"
                     app:cardCornerRadius="18dp"
                     app:cardElevation="2dp">
 
@@ -240,7 +219,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Attendance Records"
-                            android:textColor="#536B79"
+                            android:textColor="@color/accent_label"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -249,7 +228,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:text="View the attendance records saved on this phone."
-                            android:textColor="#777184"
+                            android:textColor="@color/text_secondary"
                             android:textSize="13sp" />
 
                         <Button
@@ -257,10 +236,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="46dp"
                             android:layout_marginTop="11dp"
-                            android:backgroundTint="#6F8793"
+                            android:backgroundTint="@color/accent"
                             android:text="View Attendance Records"
                             android:textAllCaps="false"
-                            android:textColor="#FFFFFF" />
+                            android:textColor="@color/surface_card" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
@@ -279,14 +258,14 @@
                     android:text="Participant Check-in"
                     android:textSize="21sp"
                     android:textStyle="bold"
-                    android:textColor="#29243A" />
+                    android:textColor="@color/text_primary" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="Enter your name and select an event you have registered for."
-                    android:textColor="#777184"
+                    android:textColor="@color/text_secondary"
                     android:textSize="13sp" />
 
                 <EditText
@@ -315,17 +294,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="13dp"
-                    android:backgroundTint="#7656A8"
+                    android:backgroundTint="@color/accent"
                     android:text="Find Paired Organizer Phones"
                     android:textAllCaps="false"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="@color/surface_card" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="13dp"
                     android:text="Tap the organizer phone below to send your check-in."
-                    android:textColor="#777184"
+                    android:textColor="@color/text_secondary"
                     android:textSize="13sp" />
 
                 <ListView
@@ -333,7 +312,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="220dp"
                     android:layout_marginTop="5dp"
-                    android:divider="#E9E3F0"
+                    android:divider="@color/divider_soft"
                     android:dividerHeight="1dp" />
             </LinearLayout>
 
@@ -351,7 +330,7 @@
                     android:text="Organizer Mode"
                     android:textSize="21sp"
                     android:textStyle="bold"
-                    android:textColor="#29243A" />
+                    android:textColor="@color/text_primary" />
 
                 <TextView
                     android:id="@+id/tvOrganizerHint"
@@ -359,7 +338,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="Keep this screen open while participants send their check-ins."
-                    android:textColor="#777184"
+                    android:textColor="@color/text_secondary"
                     android:textSize="13sp" />
 
                 <Button
@@ -367,20 +346,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="14dp"
-                    android:backgroundTint="#E7E0F2"
+                    android:backgroundTint="@color/accent_soft"
                     android:text="Make This Phone Discoverable"
                     android:textAllCaps="false"
-                    android:textColor="#5F4A7E" />
+                    android:textColor="@color/accent_text" />
 
                 <Button
                     android:id="@+id/btnStartServer"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="9dp"
-                    android:backgroundTint="#657DB4"
+                    android:backgroundTint="@color/accent"
                     android:text="Start Receiving Check-ins"
                     android:textAllCaps="false"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="@color/surface_card" />
 
                 <Button
                     android:id="@+id/btnStopServer"
@@ -390,7 +369,7 @@
                     android:backgroundTint="#E9E4EF"
                     android:text="Stop Receiving"
                     android:textAllCaps="false"
-                    android:textColor="#5F4A7E" />
+                    android:textColor="@color/accent_text" />
             </LinearLayout>
 
             <LinearLayout
@@ -407,14 +386,14 @@
                     android:text="Attendance Records"
                     android:textSize="21sp"
                     android:textStyle="bold"
-                    android:textColor="#29243A" />
+                    android:textColor="@color/text_primary" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="Records saved locally on this organizer phone."
-                    android:textColor="#777184"
+                    android:textColor="@color/text_secondary"
                     android:textSize="13sp" />
 
                 <Button
@@ -422,17 +401,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
                     android:layout_marginTop="12dp"
-                    android:backgroundTint="#E7E0F2"
+                    android:backgroundTint="@color/accent_soft"
                     android:text="Refresh Records"
                     android:textAllCaps="false"
-                    android:textColor="#5F4A7E" />
+                    android:textColor="@color/accent_text" />
 
                 <ListView
                     android:id="@+id/lvAttendance"
                     android:layout_width="match_parent"
                     android:layout_height="320dp"
                     android:layout_marginTop="8dp"
-                    android:divider="#E9E3F0"
+                    android:divider="@color/divider_soft"
                     android:dividerHeight="1dp" />
             </LinearLayout>
         </LinearLayout>

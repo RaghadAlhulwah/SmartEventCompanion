@@ -4,41 +4,20 @@
     android:id="@+id/detailsRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F7F5FC">
+    android:background="@color/app_background">
 
-    <LinearLayout
-        android:id="@+id/footerLayout"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:padding="12dp"
-        android:background="#F7F5FC">
-
-        <Button
-            android:id="@+id/btnHome"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="6dp"
-            android:backgroundTint="#E7E0F2"
-            android:text="Home"
-            android:textAllCaps="false"
-            android:textColor="#5F4A7E"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/btnMyEvents"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:layout_marginStart="6dp"
-            android:backgroundTint="#E7E0F2"
-            android:text="My Events"
-            android:textAllCaps="false"
-            android:textColor="#5F4A7E"
-            android:textStyle="bold" />
-    </LinearLayout>
+        android:background="@color/surface_card"
+        app:menu="@menu/bottom_navigation_menu"
+        app:itemIconTint="@color/bottom_navigation_tint"
+        app:itemTextColor="@color/bottom_navigation_tint"
+        app:itemIconSize="22dp"
+        app:labelVisibilityMode="labeled"
+        app:itemHorizontalTranslationEnabled="false"
+        app:elevation="8dp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -57,16 +36,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginBottom="14dp"
-                android:backgroundTint="#E7E0F2"
+                android:backgroundTint="@color/accent_soft"
                 android:text="‹  Back"
                 android:textAllCaps="false"
-                android:textColor="#5F4A7E" />
+                android:textColor="@color/accent_text" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="EVENT DETAILS"
-                android:textColor="#8065A8"
+                android:textColor="@color/accent_label"
                 android:textSize="11sp"
                 android:textStyle="bold"
                 android:letterSpacing="0.08" />
@@ -77,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:text="Event Name"
-                android:textColor="#29243A"
+                android:textColor="@color/text_primary"
                 android:textSize="26sp"
                 android:textStyle="bold" />
 
@@ -85,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                app:cardBackgroundColor="#FFFFFF"
+                app:cardBackgroundColor="@color/surface_card"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="2dp">
 
@@ -99,7 +78,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="DATE"
-                        android:textColor="#8065A8"
+                        android:textColor="@color/accent_label"
                         android:textSize="11sp"
                         android:textStyle="bold" />
 
@@ -109,7 +88,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:text="Event Date"
-                        android:textColor="#29243A"
+                        android:textColor="@color/text_primary"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -118,13 +97,13 @@
                         android:layout_height="1dp"
                         android:layout_marginTop="17dp"
                         android:layout_marginBottom="17dp"
-                        android:background="#EEEAF3" />
+                        android:background="@color/divider_soft" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="LOCATION"
-                        android:textColor="#8065A8"
+                        android:textColor="@color/accent_label"
                         android:textSize="11sp"
                         android:textStyle="bold" />
 
@@ -134,7 +113,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:text="Event Location"
-                        android:textColor="#29243A"
+                        android:textColor="@color/text_primary"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -143,13 +122,13 @@
                         android:layout_height="1dp"
                         android:layout_marginTop="17dp"
                         android:layout_marginBottom="17dp"
-                        android:background="#EEEAF3" />
+                        android:background="@color/divider_soft" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="ABOUT THIS EVENT"
-                        android:textColor="#8065A8"
+                        android:textColor="@color/accent_label"
                         android:textSize="11sp"
                         android:textStyle="bold" />
 
@@ -170,10 +149,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:layout_marginTop="20dp"
-                android:backgroundTint="#7656A8"
+                android:backgroundTint="@color/accent"
                 android:text="Register for Event"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/surface_card"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>

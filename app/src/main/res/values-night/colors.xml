@@ -1,4 +1,9 @@
 <resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="bg_main">@color/app_background</color>
+    <color name="glass_card">@color/surface_card</color>
+
     <color name="app_background">#171421</color>
     <color name="surface_card">#252132</color>
     <color name="text_primary">#F5F0FC</color>

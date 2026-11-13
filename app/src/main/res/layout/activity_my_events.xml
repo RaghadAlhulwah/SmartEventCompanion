@@ -74,7 +74,7 @@
                     android:backgroundTint="@color/accent"
                     android:text="Save Summary"
                     android:textAllCaps="false"
-                    android:textColor="@color/surface_card" />
+                    android:textColor="@color/on_accent" />
 
                 <Button
                     android:id="@+id/btnViewSummary"
@@ -131,7 +131,7 @@
                                 android:backgroundTint="@color/accent"
                                 android:text="Browse Events"
                                 android:textAllCaps="false"
-                                android:textColor="@color/surface_card"
+                                android:textColor="@color/on_accent"
                                 android:visibility="gone" />
 
                             <Button

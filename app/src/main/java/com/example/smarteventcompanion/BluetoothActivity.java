@@ -47,7 +47,6 @@ public class BluetoothActivity extends AppCompatActivity {
     private static final int ACTION_ENABLE = 1;
     private static final int ACTION_START_SERVER = 2;
     private static final int ACTION_LOAD_DEVICES = 3;
-    private static final int ACTION_DISCOVERABLE = 4;
 
     private BluetoothAdapter bluetoothAdapter;
     private BluetoothServerSocket serverSocket;
@@ -203,9 +202,6 @@ public class BluetoothActivity extends AppCompatActivity {
             case ACTION_LOAD_DEVICES:
                 loadPairedDevices();
                 break;
-            case ACTION_DISCOVERABLE:
-                requestDiscoverableNow();
-                break;
             default:
                 break;
         }
@@ -238,7 +234,7 @@ public class BluetoothActivity extends AppCompatActivity {
                     REQUEST_ADVERTISE_PERMISSION);
             return;
         }
-        runBluetoothAction(ACTION_DISCOVERABLE);
+        requestDiscoverableNow();
     }
 
     private void requestDiscoverableNow() {

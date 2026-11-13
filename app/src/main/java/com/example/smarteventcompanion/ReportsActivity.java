@@ -9,6 +9,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -26,6 +29,12 @@ public class ReportsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reports);
+        View root = findViewById(R.id.reportsRoot);
+        ViewCompat.setOnApplyWindowInsetsListener(root, (v, windowInsets) -> {
+            Insets bars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(bars.left, bars.top, bars.right, bars.bottom);
+            return windowInsets;
+        });
 
         databaseHelper = new DatabaseHelper(this);
         tvRegisteredCount = findViewById(R.id.tvRegisteredCount);

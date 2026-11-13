@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         View root = findViewById(R.id.main);
         ViewCompat.setOnApplyWindowInsetsListener(root, (v, windowInsets) -> {
             Insets bars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(bars.left, bars.top, bars.right, bars.bottom);
+            v.setPadding(bars.left + 18, bars.top + 16, bars.right + 18, bars.bottom + 12);
             return windowInsets;
         });
 

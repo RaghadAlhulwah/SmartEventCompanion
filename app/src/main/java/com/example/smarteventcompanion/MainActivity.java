@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
             openScreen(intent);
         });
 
+        updateThemeButton(btnToggleTheme);
         btnToggleTheme.setOnClickListener(v -> {
             int currentMode = getResources().getConfiguration().uiMode
                     & Configuration.UI_MODE_NIGHT_MASK;
@@ -108,6 +109,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
+    private void updateThemeButton(Button button) {
+        int currentMode = getResources().getConfiguration().uiMode
+                & Configuration.UI_MODE_NIGHT_MASK;
+        button.setText(currentMode == Configuration.UI_MODE_NIGHT_YES
+                ? "Light mode" : "Dark mode");
+    }
 
     private void setupBottomNavigation() {
         BottomNavigationView navigation = findViewById(R.id.bottomNavigation);

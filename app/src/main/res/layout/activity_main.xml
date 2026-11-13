@@ -47,10 +47,10 @@
             android:layout_height="42dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:backgroundTint="#E8E0F4"
+            android:backgroundTint="@color/accent_soft"
             android:text="Theme"
             android:textAllCaps="false"
-            android:textColor="#5D477F"
+            android:textColor="@color/accent_text"
             android:textSize="12sp" />
     </RelativeLayout>
 

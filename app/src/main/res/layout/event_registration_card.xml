@@ -64,10 +64,10 @@
                 android:layout_height="42dp"
                 android:layout_weight="1"
                 android:layout_marginStart="5dp"
-                android:backgroundTint="#F7E8EC"
+                android:backgroundTint="@color/danger_soft"
                 android:text="Cancel"
                 android:textAllCaps="false"
-                android:textColor="#A33E59" />
+                android:textColor="@color/danger" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

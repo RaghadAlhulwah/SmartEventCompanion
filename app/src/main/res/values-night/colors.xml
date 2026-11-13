@@ -1,0 +1,14 @@
+<resources>
+    <color name="app_background">#171421</color>
+    <color name="surface_card">#252132</color>
+    <color name="text_primary">#F5F0FC</color>
+    <color name="text_secondary">#B9B1C8</color>
+    <color name="accent">#B99AE8</color>
+    <color name="accent_soft">#3B304E</color>
+    <color name="accent_text">#E5D9F6</color>
+    <color name="accent_label">#C6A9F0</color>
+    <color name="input_hint">#A79DB8</color>
+    <color name="divider_soft">#40384C</color>
+    <color name="on_accent">#21182E</color>
+    <color name="nav_unselected">#A79DB8</color>
+</resources>

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +18,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -54,13 +54,19 @@ public class BluetoothActivity extends AppCompatActivity {
     private volatile boolean serverRunning = false;
     private int pendingAction = ACTION_NONE;
 
+    private View hubPanel;
+    private View participantPanel;
+    private View organizerPanel;
+    private View attendancePanel;
     private TextView tvBtStatus;
     private EditText etParticipantName;
     private Spinner spRegisteredEvents;
     private ListView lvDevices;
+    private ListView lvAttendance;
     private ArrayList<BluetoothDevice> bluetoothDevices = new ArrayList<>();
     private ArrayList<Event> registeredEvents = new ArrayList<>();
     private ArrayAdapter<String> deviceAdapter;
+    private ArrayAdapter<String> attendanceAdapter;
     private DatabaseHelper databaseHelper;
 
     @Override
@@ -68,32 +74,48 @@ public class BluetoothActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth);
 
+        hubPanel = findViewById(R.id.hubPanel);
+        participantPanel = findViewById(R.id.participantPanel);
+        organizerPanel = findViewById(R.id.organizerPanel);
+        attendancePanel = findViewById(R.id.attendancePanel);
         tvBtStatus = findViewById(R.id.tvBtStatus);
         etParticipantName = findViewById(R.id.etParticipantName);
         spRegisteredEvents = findViewById(R.id.spRegisteredEvents);
         lvDevices = findViewById(R.id.lvDevices);
-
-        Button btnEnableBt = findViewById(R.id.btnEnableBt);
-        Button btnVisible = findViewById(R.id.btnVisible);
-        Button btnPairedDevices = findViewById(R.id.btnPairedDevices);
-        Button btnStartServer = findViewById(R.id.btnStartServer);
-        Button btnViewAttendance = findViewById(R.id.btnViewAttendance);
+        lvAttendance = findViewById(R.id.lvAttendance);
 
         databaseHelper = new DatabaseHelper(this);
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         deviceAdapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_list_item_1, new ArrayList<>());
+        attendanceAdapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_list_item_1, new ArrayList<>());
         lvDevices.setAdapter(deviceAdapter);
+        lvAttendance.setAdapter(attendanceAdapter);
 
-        loadRegisteredEvents();
-        refreshBluetoothStatus();
+        findViewById(R.id.btnParticipantMode).setOnClickListener(v -> showPanel(participantPanel));
+        findViewById(R.id.btnOrganizerMode).setOnClickListener(v -> showPanel(organizerPanel));
+        findViewById(R.id.btnAttendanceDashboard).setOnClickListener(v -> {
+            showPanel(attendancePanel);
+            loadAttendanceRecords();
+        });
 
-        btnEnableBt.setOnClickListener(v -> enableBluetooth());
-        btnVisible.setOnClickListener(v -> makeDeviceDiscoverable());
-        btnPairedDevices.setOnClickListener(v -> runBluetoothAction(ACTION_LOAD_DEVICES));
-        btnStartServer.setOnClickListener(v -> runBluetoothAction(ACTION_START_SERVER));
-        btnViewAttendance.setOnClickListener(v -> showAttendanceRecords());
+        findViewById(R.id.btnBack).setOnClickListener(v -> {
+            if (hubPanel.getVisibility() == View.VISIBLE) {
+                finish();
+            } else {
+                showHub();
+            }
+        });
+        findViewById(R.id.btnHome).setOnClickListener(v -> openScreen(MainActivity.class));
+        findViewById(R.id.btnMyEvents).setOnClickListener(v -> openScreen(MyEventsActivity.class));
+
+        findViewById(R.id.btnEnableBt).setOnClickListener(v -> runBluetoothAction(ACTION_ENABLE));
+        findViewById(R.id.btnVisible).setOnClickListener(v -> makeDeviceDiscoverable());
+        findViewById(R.id.btnPairedDevices).setOnClickListener(v -> runBluetoothAction(ACTION_LOAD_DEVICES));
+        findViewById(R.id.btnStartServer).setOnClickListener(v -> runBluetoothAction(ACTION_START_SERVER));
+        findViewById(R.id.btnStopServer).setOnClickListener(v -> stopServer());
 
         lvDevices.setOnItemClickListener((parent, view, position, id) -> {
             if (position < bluetoothDevices.size()) {
@@ -101,9 +123,28 @@ public class BluetoothActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
-        findViewById(R.id.btnHome).setOnClickListener(v -> openScreen(MainActivity.class));
-        findViewById(R.id.btnMyEvents).setOnClickListener(v -> openScreen(MyEventsActivity.class));
+        loadRegisteredEvents();
+        showHub();
+        refreshBluetoothStatus();
+    }
+
+    private void showHub() {
+        hubPanel.setVisibility(View.VISIBLE);
+        participantPanel.setVisibility(View.GONE);
+        organizerPanel.setVisibility(View.GONE);
+        attendancePanel.setVisibility(View.GONE);
+        refreshBluetoothStatus();
+    }
+
+    private void showPanel(View panel) {
+        hubPanel.setVisibility(View.GONE);
+        participantPanel.setVisibility(panel == participantPanel ? View.VISIBLE : View.GONE);
+        organizerPanel.setVisibility(panel == organizerPanel ? View.VISIBLE : View.GONE);
+        attendancePanel.setVisibility(panel == attendancePanel ? View.VISIBLE : View.GONE);
+        refreshBluetoothStatus();
+        if (panel == participantPanel) {
+            loadRegisteredEvents();
+        }
     }
 
     private void loadRegisteredEvents() {
@@ -113,10 +154,11 @@ public class BluetoothActivity extends AppCompatActivity {
             for (Event event : registeredEvents) {
                 eventNames.add(event.getName() + " (ID: " + event.getId() + ")");
             }
-
             if (eventNames.isEmpty()) {
                 eventNames.add("Register for an event first");
                 etParticipantName.setEnabled(false);
+            } else {
+                etParticipantName.setEnabled(true);
             }
 
             ArrayAdapter<String> eventAdapter = new ArrayAdapter<>(
@@ -142,8 +184,7 @@ public class BluetoothActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !hasConnectPermission()) {
             pendingAction = action;
             ActivityCompat.requestPermissions(
-                    this,
-                    new String[]{Manifest.permission.BLUETOOTH_CONNECT},
+                    this, new String[]{Manifest.permission.BLUETOOTH_CONNECT},
                     REQUEST_CONNECT_PERMISSION);
             return;
         }
@@ -169,20 +210,14 @@ public class BluetoothActivity extends AppCompatActivity {
         }
     }
 
-    private void enableBluetooth() {
-        runBluetoothAction(ACTION_ENABLE);
-    }
-
     private void enableBluetoothNow() {
-        if (bluetoothAdapter == null) {
-            showStatus("This device does not support Bluetooth.");
-            return;
-        }
         try {
-            if (!bluetoothAdapter.isEnabled()) {
+            if (bluetoothAdapter == null) {
+                showStatus("This device does not support Bluetooth.");
+            } else if (!bluetoothAdapter.isEnabled()) {
                 startActivity(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE));
             } else {
-                Toast.makeText(this, "Bluetooth is already on.", Toast.LENGTH_SHORT).show();
+                showStatus("Bluetooth is already on and ready.");
             }
         } catch (SecurityException e) {
             showStatus("Bluetooth permission is required to turn it on.");
@@ -198,20 +233,17 @@ public class BluetoothActivity extends AppCompatActivity {
                 && ActivityCompat.checkSelfPermission(
                 this, Manifest.permission.BLUETOOTH_ADVERTISE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
-                    this,
-                    new String[]{Manifest.permission.BLUETOOTH_ADVERTISE},
+                    this, new String[]{Manifest.permission.BLUETOOTH_ADVERTISE},
                     REQUEST_ADVERTISE_PERMISSION);
             return;
         }
-        requestDiscoverableNow();
+        runBluetoothAction(ACTION_DISCOVERABLE);
     }
 
     private void requestDiscoverableNow() {
         try {
-            Intent discoverableIntent =
-                    new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-            discoverableIntent.putExtra(
-                    BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+            Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+            discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
             startActivity(discoverableIntent);
         } catch (SecurityException e) {
             showStatus("Bluetooth advertising permission is required.");
@@ -230,14 +262,14 @@ public class BluetoothActivity extends AppCompatActivity {
         try {
             showStatus(bluetoothAdapter.isEnabled()
                     ? "Bluetooth is ON — ready to connect."
-                    : "Bluetooth is OFF — tap Turn On.");
+                    : "Bluetooth is OFF — turn it on to continue.");
         } catch (SecurityException e) {
             showStatus("Bluetooth permission is required.");
         }
     }
 
     private void showStatus(String message) {
-        tvBtStatus.setText("Status: " + message);
+        tvBtStatus.setText("Bluetooth status: " + message);
     }
 
     private void loadPairedDevices() {
@@ -268,7 +300,7 @@ public class BluetoothActivity extends AppCompatActivity {
                         + "\n" + device.getAddress());
             }
             deviceAdapter.notifyDataSetChanged();
-            showStatus("Select a paired organizer device below to send attendance.");
+            showStatus("Choose the paired organizer phone from the list.");
         } catch (SecurityException e) {
             showStatus("Bluetooth Connect permission was not granted.");
         }
@@ -291,35 +323,36 @@ public class BluetoothActivity extends AppCompatActivity {
         }
 
         if (serverRunning) {
-            showStatus("Organizer mode is already running. Waiting for participants…");
+            showStatus("Organizer mode is already active and waiting for participants.");
             return;
         }
 
         serverRunning = true;
-        showStatus("Organizer mode is starting… keep this screen open.");
+        showStatus("Starting organizer receiver… keep this page open.");
         new Thread(() -> {
             try {
-                serverSocket = bluetoothAdapter.listenUsingRfcommWithServiceRecord(
-                        APP_NAME, APP_UUID);
-                runOnUiThread(() ->
-                        showStatus("Organizer mode is active. Waiting for check-ins…"));
-
+                serverSocket = bluetoothAdapter.listenUsingRfcommWithServiceRecord(APP_NAME, APP_UUID);
+                runOnUiThread(() -> showStatus("Organizer is active. Waiting for participant check-ins…"));
                 while (serverRunning) {
                     BluetoothSocket clientSocket = serverSocket.accept();
-                    if (clientSocket != null) {
-                        receiveAttendance(clientSocket);
-                    }
+                    if (clientSocket != null) receiveAttendance(clientSocket);
                 }
             } catch (IOException | SecurityException e) {
                 if (serverRunning) {
-                    runOnUiThread(() ->
-                            showStatus("Could not receive connections. Check pairing and permissions."));
+                    runOnUiThread(() -> showStatus(
+                            "Could not receive connections. Check pairing, visibility and permissions."));
                 }
             } finally {
                 serverRunning = false;
                 closeServerSocket();
             }
         }, "attendance-server").start();
+    }
+
+    private void stopServer() {
+        serverRunning = false;
+        closeServerSocket();
+        showStatus("Organizer receiver stopped.");
     }
 
     private void receiveAttendance(BluetoothSocket socket) {
@@ -343,26 +376,23 @@ public class BluetoothActivity extends AppCompatActivity {
 
             String attendanceTime = new SimpleDateFormat(
                     "yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
-
-            if (databaseHelper.isAttendanceRecorded(participantName, eventId)) {
-                showReceiveResult(participantName + " is already checked in for event "
-                        + eventId + ".", false);
-                return;
-            }
-
             boolean saved = databaseHelper.recordAttendance(
                     participantName, eventId, attendanceTime);
-            showReceiveResult(saved
-                    ? "Attendance saved for " + participantName + " (Event " + eventId + ")."
-                    : "Attendance could not be saved. Please try again.", saved);
 
+            if (saved) {
+                showReceiveResult("Attendance saved for " + participantName
+                        + " (Event " + eventId + ").", true);
+            } else if (databaseHelper.isAttendanceRecorded(participantName, eventId)) {
+                showReceiveResult(participantName + " is already checked in for this event.", false);
+            } else {
+                showReceiveResult("Attendance could not be saved. Please try again.", false);
+            }
         } catch (IOException | JSONException | IllegalStateException e) {
             showReceiveResult("Could not read or save the attendance message.", false);
         } finally {
             try {
                 socket.close();
-            } catch (IOException ignored) {
-            }
+            } catch (IOException ignored) { }
         }
     }
 
@@ -370,6 +400,7 @@ public class BluetoothActivity extends AppCompatActivity {
         runOnUiThread(() -> {
             showStatus(message);
             Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            if (attendancePanel.getVisibility() == View.VISIBLE) loadAttendanceRecords();
         });
     }
 
@@ -397,7 +428,6 @@ public class BluetoothActivity extends AppCompatActivity {
                     runOnUiThread(() -> showStatus("Bluetooth Connect permission is required."));
                     return;
                 }
-
                 socket = device.createRfcommSocketToServiceRecord(APP_UUID);
                 socket.connect();
 
@@ -410,44 +440,35 @@ public class BluetoothActivity extends AppCompatActivity {
                 output.write((payload.toString() + "\n").getBytes(StandardCharsets.UTF_8));
                 output.flush();
 
-                runOnUiThread(() -> Toast.makeText(
-                        this, "Check-in sent to organizer.", Toast.LENGTH_LONG).show());
+                runOnUiThread(() -> {
+                    showStatus("Check-in message sent. Ask the organizer to confirm receipt.");
+                    Toast.makeText(this, "Check-in sent to organizer.", Toast.LENGTH_LONG).show();
+                });
             } catch (IOException | JSONException | SecurityException e) {
                 runOnUiThread(() -> Toast.makeText(
                         this,
-                        "Connection failed. Make sure the organizer is listening and both phones are paired.",
+                        "Connection failed. Ensure the organizer is listening and both phones are paired.",
                         Toast.LENGTH_LONG).show());
             } finally {
                 if (socket != null) {
-                    try {
-                        socket.close();
-                    } catch (IOException ignored) {
-                    }
+                    try { socket.close(); } catch (IOException ignored) { }
                 }
             }
         }, "attendance-client").start();
     }
 
-    private void showAttendanceRecords() {
+    private void loadAttendanceRecords() {
         try {
+            attendanceAdapter.clear();
             ArrayList<String> records = databaseHelper.getAttendanceRecords();
             if (records.isEmpty()) {
-                new AlertDialog.Builder(this)
-                        .setTitle("Attendance Records")
-                        .setMessage("No attendance has been recorded on this device yet.")
-                        .setPositiveButton("Close", null)
-                        .show();
-                return;
+                attendanceAdapter.add("No attendance records yet.");
+            } else {
+                attendanceAdapter.addAll(records);
             }
-            String[] items = records.toArray(new String[0]);
-            new AlertDialog.Builder(this)
-                    .setTitle("Saved Attendance")
-                    .setItems(items, (dialog, which) -> { })
-                    .setPositiveButton("Close", null)
-                    .show();
+            attendanceAdapter.notifyDataSetChanged();
         } catch (IllegalStateException e) {
-            Toast.makeText(this, "Unable to load attendance records.",
-                    Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Unable to load attendance records.", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -455,10 +476,7 @@ public class BluetoothActivity extends AppCompatActivity {
         BluetoothServerSocket current = serverSocket;
         serverSocket = null;
         if (current != null) {
-            try {
-                current.close();
-            } catch (IOException ignored) {
-            }
+            try { current.close(); } catch (IOException ignored) { }
         }
     }
 
@@ -472,8 +490,7 @@ public class BluetoothActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == REQUEST_CONNECT_PERMISSION) {
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 int action = pendingAction;
                 pendingAction = ACTION_NONE;
                 performAction(action);
@@ -483,9 +500,8 @@ public class BluetoothActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
             }
         } else if (requestCode == REQUEST_ADVERTISE_PERMISSION) {
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                requestDiscoverableNow();
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                runBluetoothAction(ACTION_DISCOVERABLE);
             } else {
                 Toast.makeText(this, "Bluetooth advertising permission was denied.",
                         Toast.LENGTH_LONG).show();

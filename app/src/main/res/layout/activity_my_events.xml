@@ -4,41 +4,20 @@
     android:id="@+id/myEventsRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F7F5FC">
+    android:background="@color/app_background">
 
-    <LinearLayout
-        android:id="@+id/footerLayout"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:padding="12dp"
-        android:background="#F7F5FC">
-
-        <Button
-            android:id="@+id/btnHome"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="6dp"
-            android:backgroundTint="#E7E0F2"
-            android:text="Home"
-            android:textAllCaps="false"
-            android:textColor="#5F4A7E"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/btnMyEvents"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:layout_marginStart="6dp"
-            android:backgroundTint="#7656A8"
-            android:text="My Events"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold" />
-    </LinearLayout>
+        android:background="@color/surface_card"
+        app:menu="@menu/bottom_navigation_menu"
+        app:itemIconTint="@color/bottom_navigation_tint"
+        app:itemTextColor="@color/bottom_navigation_tint"
+        app:itemIconSize="22dp"
+        app:labelVisibilityMode="labeled"
+        app:itemHorizontalTranslationEnabled="false"
+        app:elevation="8dp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -57,16 +36,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginBottom="12dp"
-                android:backgroundTint="#E7E0F2"
+                android:backgroundTint="@color/accent_soft"
                 android:text="‹  Back"
                 android:textAllCaps="false"
-                android:textColor="#5F4A7E" />
+                android:textColor="@color/accent_text" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="My Events"
-                android:textColor="#29243A"
+                android:textColor="@color/text_primary"
                 android:textSize="27sp"
                 android:textStyle="bold" />
 
@@ -76,7 +55,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="14dp"
                 android:text="Your registered events, all in one place."
-                android:textColor="#777184"
+                android:textColor="@color/text_secondary"
                 android:textSize="14sp" />
 
             <LinearLayout
@@ -91,10 +70,10 @@
                     android:layout_height="46dp"
                     android:layout_weight="1"
                     android:layout_marginEnd="5dp"
-                    android:backgroundTint="#7656A8"
+                    android:backgroundTint="@color/accent"
                     android:text="Save Summary"
                     android:textAllCaps="false"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="@color/surface_card" />
 
                 <Button
                     android:id="@+id/btnViewSummary"
@@ -102,17 +81,17 @@
                     android:layout_height="46dp"
                     android:layout_weight="1"
                     android:layout_marginStart="5dp"
-                    android:backgroundTint="#E7E0F2"
+                    android:backgroundTint="@color/accent_soft"
                     android:text="View Summary"
                     android:textAllCaps="false"
-                    android:textColor="#5F4A7E" />
+                    android:textColor="@color/accent_text" />
             </LinearLayout>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="#FFFFFF"
+                app:cardBackgroundColor="@color/surface_card"
                 app:cardCornerRadius="18dp"
                 app:cardElevation="2dp">
 
@@ -139,7 +118,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="Loading your events..."
-                                android:textColor="#777184"
+                                android:textColor="@color/text_secondary"
                                 android:textSize="15sp"
                                 android:lineSpacingExtra="5dp" />
 
@@ -148,10 +127,10 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="48dp"
                                 android:layout_marginTop="18dp"
-                                android:backgroundTint="#7656A8"
+                                android:backgroundTint="@color/accent"
                                 android:text="Browse Events"
                                 android:textAllCaps="false"
-                                android:textColor="#FFFFFF"
+                                android:textColor="@color/surface_card"
                                 android:visibility="gone" />
 
                             <Button
@@ -159,10 +138,10 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="48dp"
                                 android:layout_marginTop="10dp"
-                                android:backgroundTint="#E7E0F2"
+                                android:backgroundTint="@color/accent_soft"
                                 android:text="Retry"
                                 android:textAllCaps="false"
-                                android:textColor="#5F4A7E"
+                                android:textColor="@color/accent_text"
                                 android:visibility="gone" />
                         </LinearLayout>
                     </ScrollView>
@@ -172,7 +151,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="10dp"
-                        android:divider="#EEEAF3"
+                        android:divider="@color/divider_soft"
                         android:dividerHeight="8dp"
                         android:visibility="gone" />
                 </FrameLayout>

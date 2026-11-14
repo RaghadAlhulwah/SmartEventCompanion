@@ -30,7 +30,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_centerVertical="true"
-            android:layout_marginStart="54dp"
             android:layout_marginStart="54dp">
 
             <TextView

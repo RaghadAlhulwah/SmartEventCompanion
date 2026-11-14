@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -38,13 +39,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
 
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());
-        findViewById(R.id.btnHome).setOnClickListener(v -> openHome());
-        findViewById(R.id.btnMyEvents).setOnClickListener(v -> {
-            Intent intent = new Intent(this, MyEventsActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(intent);
-        });
+        setupBottomNavigation();
 
         TextView tvEventName = findViewById(R.id.tvEventName);
         TextView tvEventDate = findViewById(R.id.tvEventDate);
@@ -78,6 +73,32 @@ public class EventDetailsActivity extends AppCompatActivity {
         tvEventDescription.setText(event.getDescription());
 
         btnRegister.setOnClickListener(v -> registerEvent());
+    }
+
+
+    private void setupBottomNavigation() {
+        BottomNavigationView navigation = findViewById(R.id.bottomNavigation);
+        navigation.setSelectedItemId(R.id.nav_home);
+        navigation.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_home) {
+                openHome();
+                return true;
+            }
+            if (id == R.id.nav_registrations) {
+                startActivity(new Intent(this, MyEventsActivity.class));
+                return true;
+            }
+            if (id == R.id.nav_bluetooth) {
+                startActivity(new Intent(this, BluetoothActivity.class));
+                return true;
+            }
+            if (id == R.id.nav_reports) {
+                startActivity(new Intent(this, ReportsActivity.class));
+                return true;
+            }
+            return false;
+        });
     }
 
     @Override

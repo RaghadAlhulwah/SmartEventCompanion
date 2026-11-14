@@ -92,6 +92,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    // Cancel a participant's event registration.
+    public boolean cancelRegistration(int eventId) {
+        if (eventId <= 0) return false;
+        try {
+            int deleted = getWritableDatabase().delete(
+                    TABLE_EVENTS, "id = ?", new String[]{String.valueOf(eventId)});
+            return deleted > 0;
+        } catch (SQLiteException e) {
+            return false;
+        }
+    }
+
     // Check if event is already registered
     public boolean isEventRegistered(int eventId) {
 

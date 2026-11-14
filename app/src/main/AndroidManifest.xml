@@ -37,5 +37,6 @@
         <activity android:name=".BluetoothActivity" android:exported="false" />
         <activity android:name=".EventDetailsActivity" android:exported="false" />
         <activity android:name=".MyEventsActivity" android:exported="false" />
+        <activity android:name=".ReportsActivity" android:exported="false" />
     </application>
 </manifest>

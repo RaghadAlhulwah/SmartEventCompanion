@@ -19,7 +19,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.core.app.ActivityCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,6 +79,12 @@ public class BluetoothActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth);
+        View root = findViewById(R.id.bluetoothRoot);
+        ViewCompat.setOnApplyWindowInsetsListener(root, (v, windowInsets) -> {
+            Insets bars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(bars.left, bars.top, bars.right, bars.bottom);
+            return windowInsets;
+        });
 
         hubPanel = findViewById(R.id.hubPanel);
         participantPanel = findViewById(R.id.participantPanel);
@@ -114,8 +124,7 @@ public class BluetoothActivity extends AppCompatActivity {
                 showHub();
             }
         });
-        findViewById(R.id.btnHome).setOnClickListener(v -> openScreen(MainActivity.class));
-        findViewById(R.id.btnMyEvents).setOnClickListener(v -> openScreen(MyEventsActivity.class));
+        setupBottomNavigation();
 
         btnEnableBt.setOnClickListener(v -> runBluetoothAction(ACTION_TOGGLE_BLUETOOTH));
         findViewById(R.id.btnVisible).setOnClickListener(v -> makeDeviceDiscoverable());
@@ -135,6 +144,29 @@ public class BluetoothActivity extends AppCompatActivity {
         loadRegisteredEvents();
         showHub();
         refreshBluetoothStatus();
+    }
+
+
+    private void setupBottomNavigation() {
+        BottomNavigationView navigation = findViewById(R.id.bottomNavigation);
+        navigation.setSelectedItemId(R.id.nav_bluetooth);
+        navigation.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_bluetooth) return true;
+            if (id == R.id.nav_home) {
+                openScreen(MainActivity.class);
+                return true;
+            }
+            if (id == R.id.nav_registrations) {
+                openScreen(MyEventsActivity.class);
+                return true;
+            }
+            if (id == R.id.nav_reports) {
+                openScreen(ReportsActivity.class);
+                return true;
+            }
+            return false;
+        });
     }
 
     private void showHub() {

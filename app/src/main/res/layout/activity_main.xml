@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F7F5FC"
+    android:background="@color/app_background"
     android:paddingStart="18dp"
     android:paddingEnd="18dp"
     android:paddingTop="16dp"
@@ -15,17 +16,27 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="14dp">
 
+        <ImageView
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_launcher_foreground" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_centerVertical="true">
+            android:layout_centerVertical="true"
+            android:layout_marginStart="54dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SMART EVENT COMPANION"
-                android:textColor="#8065A8"
+                android:textColor="@color/accent_label"
                 android:textSize="11sp"
                 android:textStyle="bold"
                 android:letterSpacing="0.08" />
@@ -35,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Discover Events"
-                android:textColor="#29243A"
+                android:textColor="@color/text_primary"
                 android:textSize="27sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -46,10 +57,10 @@
             android:layout_height="42dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:backgroundTint="#E8E0F4"
+            android:backgroundTint="@color/accent_soft"
             android:text="Theme"
             android:textAllCaps="false"
-            android:textColor="#5D477F"
+            android:textColor="@color/accent_text"
             android:textSize="12sp" />
     </RelativeLayout>
 
@@ -57,7 +68,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Find something interesting happening around you."
-        android:textColor="#777184"
+        android:textColor="@color/text_secondary"
         android:textSize="14sp"
         android:layout_marginBottom="12dp" />
 
@@ -70,8 +81,8 @@
         android:inputType="text"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:textColor="#29243A"
-        android:textColorHint="#938CA0"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/input_hint"
         android:textSize="14sp" />
 
     <LinearLayout
@@ -87,7 +98,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Browse by type"
-            android:textColor="#403750"
+            android:textColor="@color/text_primary"
             android:textStyle="bold"
             android:textSize="14sp" />
 
@@ -96,7 +107,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Events"
-            android:textColor="#8065A8"
+            android:textColor="@color/accent_label"
             android:textSize="12sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -127,38 +138,20 @@
         android:layout_weight="1"
         android:gravity="center"
         android:padding="24dp"
-        android:textColor="#716A7C"
+        android:textColor="@color/text_secondary"
         android:textSize="15sp"
         android:visibility="gone" />
 
-    <LinearLayout
+<com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="8dp">
-
-        <Button
-            android:id="@+id/btnMyEvents"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="6dp"
-            android:backgroundTint="#E7E0F2"
-            android:text="My Events"
-            android:textAllCaps="false"
-            android:textColor="#5F4A7E"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/btnBluetooth"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:layout_marginStart="6dp"
-            android:backgroundTint="#7656A8"
-            android:text="Bluetooth Check-in"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold" />
-    </LinearLayout>
+        android:background="@color/surface_card"
+        app:menu="@menu/bottom_navigation_menu"
+        app:itemIconTint="@color/bottom_navigation_tint"
+        app:itemTextColor="@color/bottom_navigation_tint"
+        app:itemIconSize="22dp"
+        app:labelVisibilityMode="labeled"
+        app:itemHorizontalTranslationEnabled="false"
+        app:elevation="8dp" />
 </LinearLayout>
